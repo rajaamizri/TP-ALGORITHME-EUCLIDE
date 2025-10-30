@@ -1,0 +1,96 @@
+Tache de travaiI 
+           Introduction
+          Rappel theorique 
+          Exemple manuel 
+          Implementation 
+          Verification 
+           Conclusion 
+
+INTRODUCTION 
+Dans le cadre de ce travail pratique , il se agit de analyser et de mettre en œuvre algorithme de Euclide afin de calculer le plus grand commun diviseur (PGCD) de deux entiers naturels 
+
+Rappel de theorique 
+    Definition de PGCD 
+      Le Plus Grand Commun Diviseur (PGCD) de deux entiers naturels non nuls est le plus grand entir qui divise simultanement ces deux nombres sans laisszr de reste 
+       Exemple Manuels 
+    Trouver le PGCD (84 ,60)
+Etape 1 : Ecrire les deux nombres : 
+On a :    
+           A = 84 ,    B=60 
+   Le but est de trouver le plus grand nombre qui divisz a la fois 84 et 60 
+Etape 2 : diviser le plus grand par le plus petit : 
+On fait la division euclidienne de 84 par 60 : 
+84 = 60*1+24
+Le reste est 24 
+Etape 3 : remplacer et recommencer 
+Maintenant , on recommence avec 60 et 24 
+60 =24*2+12 
+Le reste est 12 
+Etape 4 : Encore fois 
+On continue avec 24 et 12 
+24=12*2+0
+Le reste est maintenat 0
+Etape 5 :conclusion 
+Quant le reste devient 0 . le dernuer reste non nul est le PGCD 
+Donc PGCD (84 ,60)
+Verification avec la decomposition en facteur premier 
+   84 = 2*2*3*7
+   2*2* 3*7
+PGCD = 2*2*3=4*3=12
+On retrouve 12 
+Implementation 
+#include <stdio.h>
+
+// Fonction pour calculer le PGCD et les coefficients de Bézout
+int bezout(int a, int b, int *u, int *v) {
+    if (b == 0) {
+        *u = 1;
+        *v = 0;
+        return a;
+} else {
+        int u1, v1;
+        int d = bezout(b, a % b, &u1, &v1);
+        *u = v1;
+        *v = u1 - (a / b) * v1;
+        return d;
+}
+}
+
+int main() {
+    int a, b, r;
+
+    printf("Entrez deux entiers positifs: ");
+    scanf("%d %d", &a, &b);
+
+    printf("Étapes de l'algorithme d'Euclide:\n");
+
+    int x = a, y = b; // garder les valeurs originales
+
+    while (b!= 0) {
+        r = a % b;
+        printf("%d = %d * (%d) + %d\n", a, a / b, b, r);
+        a = b;
+        b = r;
+}
+
+    printf("Le PGCD est: %d\n", a);
+
+    if (a == 1) {
+        printf("Les nombres %d et %d sont premiers entre eux.\n", x, y);
+} else {
+        printf("Les nombres %d et %d ne sont pas premiers entre eux.\n", x, y);
+}
+
+    // Calcul des coefficients de Bézout
+    int u, v;
+    int pgcd = bezout(x, y, &u, &v);
+    printf("Les coefficients de Bézout sont: u = %d, v = %d\n", u, v);
+    printf("Vérification: %d*%d + %d*%d = %d\n", x, u, y, v, x*u + y*v);
+
+    return 0;
+}
+Verification 
+  
+Conclusion 
+Le algorithme de Euclide permet de trouver rapidement le PGCD de deux nombres ils est tres utile en mathemariques et en programmation .
+        
